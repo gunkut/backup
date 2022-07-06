@@ -7,6 +7,13 @@ import org.hibernate.cfg.Configuration;
 
 
 public class AtmBackend {
+
+    public static int twoHundredAmount;
+    public static int oneHundredAmount;
+    public static int fiftyAmount;
+    public static int twentyAmount;
+    public static int tenAmount;
+    public static int fiveAmount;
     private double balance;
     /*private double deposit;
     private double withdraw;*/
@@ -16,11 +23,6 @@ public class AtmBackend {
 
     }
 
-    /*public AtmBackend(double balance, double deposit, double withdraw) {
-        this.balance = balance;
-        this.deposit = deposit;
-        this.withdraw = withdraw;
-    }*/
     public void connectDatabase(){
         factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(com.example.test.Atm.class).buildSessionFactory();
         session = factory.getCurrentSession();
@@ -54,21 +56,101 @@ public class AtmBackend {
         this.balance = balance;
     }
 
-    /*public int checkdatabase(){};*/
-    public int parseMoney(double amount, double number){
-        return amount / number
-    };
-    public void updateBalance(double money, char c){
+    public int checkTwoHundred(int money){
+        Atm atm = session.get(Atm.class, 1);
+        if(atm.getTwo_hundred() != 0  && atm.getTwo_hundred() >= money / 200) {
+            twoHundredAmount = money / 200;
+            money %= 200;
 
+            return money;
+        } else {
+            return money;
+        }
+    }
+
+    public int checkOneHundred(int money){
+        Atm atm = session.get(Atm.class, 1);
+        if(atm.getOne_hundred() != 0  && atm.getOne_hundred() >= money / 200) {
+            oneHundredAmount = money / 100;
+            money %= 100;
+
+            return money;
+        } else {
+            return money;
+        }
+    }
+
+    public int checkFifty(int money){
+        Atm atm = session.get(Atm.class, 1);
+        if(atm.getFifty() != 0  && atm.getFifty() >= money / 50) {
+            fiftyAmount = money / 50;
+            money %= 50;
+
+            return money;
+        } else {
+            return money;
+        }
+    }
+
+    public int checkTwenty(int money){
+        Atm atm = session.get(Atm.class, 1);
+        if(atm.getTwenty() != 0  && atm.getTwenty() >= money / 20) {
+            twentyAmount = money / 20;
+            money %= 20;
+
+            return money;
+        } else {
+            return money;
+        }
+    }
+
+    public int checkTen(int money){
+        Atm atm = session.get(Atm.class, 1);
+        if(atm.getTen() != 0  && atm.getTen() >= money / 10) {
+            tenAmount = money / 10;
+            money %= 10;
+
+            return money;
+        } else {
+            return money;
+        }
+    }
+
+    public int checkFive(int money){
+        Atm atm = session.get(Atm.class, 1);
+        if(atm.getFive() != 0  && atm.getFive() >= money / 5) {
+            fiveAmount = money / 5;
+            money %= 5;
+
+            return money;
+        } else {
+            return money;
+        }
+    }
+
+    public void updateBalance(int money, String op){
+
+        System.out.println("selam");
         try {
             connectDatabase();
             Atm atm = session.get(Atm.class, 1);
-            if (c == '-') {
-                if (money <= this.getBalance()) {
-                    while (money > 0) {
+            if (op.equals("-")) {
+                System.out.println("c is minus");
+                if (money <= getBalance()) {
 
+                    checkTwoHundred(money);
+                    checkOneHundred(checkTwoHundred(money));
+                    checkFifty(checkOneHundred(money));
+                    checkTwenty(checkFifty(money));
+                    checkTen(checkTwenty(money));
+                    checkFive(checkTen(money));
 
-                    }
+                    atm.setTwo_hundred(atm.getTwo_hundred() - twoHundredAmount );
+                    atm.setOne_hundred(atm.getTwo_hundred() - oneHundredAmount );
+                    atm.setFifty(atm.getTwo_hundred() - fiftyAmount );
+                    atm.setTwenty(atm.getTwo_hundred() - twentyAmount );
+                    atm.setTen(atm.getTwo_hundred() - tenAmount );
+                    atm.setFive(atm.getTwo_hundred() - fiveAmount );
                 } else {
                     System.out.println("Insufficient Balance");
                 }

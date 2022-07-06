@@ -43,12 +43,12 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Enter amount:");
-                    double withdrawAmount = atmUser.nextDouble();
+                    int withdrawAmount = atmUser.nextInt();
                     operation.withdrawAmount(withdrawAmount);
                     break;
                 case 3:
                     System.out.println("Enter amount:");
-                    double depositAmount = atmUser.nextDouble();
+                    int depositAmount = atmUser.nextInt();
                     operation.depositAmount(depositAmount);
                     break;
                 case 4:

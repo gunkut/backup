@@ -9,6 +9,7 @@ public class Main {
         int cardPassword = 123;
 
         Scanner atmUser = new Scanner(System.in);
+
         while(true) {
             System.out.print("Enter your card number:");
             int userCardNumber = atmUser.nextInt();
@@ -39,12 +40,12 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Enter amount:");
-                    double withdrawAmount = atmUser.nextDouble();
+                    int withdrawAmount = atmUser.nextInt();
                     operation.withdrawAmount(withdrawAmount);
                     break;
                 case 3:
                     System.out.println("Enter amount:");
-                    double depositAmount = atmUser.nextDouble();
+                    int depositAmount = atmUser.nextInt();
                     operation.depositAmount(depositAmount);
                     break;
                 case 4:
@@ -52,6 +53,7 @@ public class Main {
                     System.exit(0);
                 default:
                     System.out.println("Invalid request");
+                    break;
             }
         }
     }
